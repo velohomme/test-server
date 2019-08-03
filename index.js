@@ -3,19 +3,12 @@ var cors = require("cors");
 var app = express();
 const PORT = process.env.PORT || 5000;
 
-var allowedOrigins = ["http://localhost:8055"];
-app.use(
+// this origin property causes the response to NOT use a wildcard for
+// Access-Control-Allow-Origin.  Rather it will return the host of the 
+// page which invoked the request, e.g., Access-Control-Allow-Origin: http://localhost:8055
+ Access-Control-Allow-Origin
   cors({
     origin: function(origin, callback) {
-      // allow requests with no origin
-      // (like mobile apps or curl requests)
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) === -1) {
-        var msg =
-          "The CORS policy for this site does not " +
-          "allow access from the specified Origin.";
-        return callback(new Error(msg), false);
-      }
       return callback(null, true);
     }
   })
@@ -24,11 +17,11 @@ app.use(
 app.options("*", cors()); // enable pre-flight request
 
 app.get("/foo", function(req, res, next) {
-  res.json({ msg: "This is CORS-enabled for all origins!" });
+  res.json({ msg: "Message Received...you rock!" });
 });
 
 app.get("*", function(req, res, next) {
-  res.json({ msg: "This is CORS-enabled for all origins!" });
+  res.json({ msg: "Message Received...you rock!" });
 });
 
 app.listen(PORT, function() {
