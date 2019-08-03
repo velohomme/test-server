@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 5000;
 // page which invoked the request, e.g., Access-Control-Allow-Origin: http://localhost:8055
 app.use(
   cors({
+    credentials: true,
     origin: function(origin, callback) {
       return callback(null, true);
     }
