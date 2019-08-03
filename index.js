@@ -5,6 +5,8 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 
+app.options("*", cors()); // enable pre-flight request
+
 app.get("/foo", function(req, res, next) {
   res.json({ msg: "This is CORS-enabled for all origins!" });
 });
