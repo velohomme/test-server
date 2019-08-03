@@ -1,10 +1,18 @@
-const express = require("express");
-const app = express();
+var express = require("express");
+var cors = require("cors");
+var app = express();
+const PORT = process.env.PORT || 5000;
 
-app.get("/without-cors", (req, res, next) => {
-  res.json({ msg: "😞 no CORS, no party!" });
+app.use(cors());
+
+app.get("/foo", function(req, res, next) {
+  res.json({ msg: "This is CORS-enabled for all origins!" });
 });
 
-const server = app.listen(3000, () => {
-  console.log("Listening on port %s", server.address().port);
+app.get("*", function(req, res, next) {
+  res.json({ msg: "This is CORS-enabled for all origins!" });
+});
+
+app.listen(PORT, function() {
+  console.log("CORS-enabled web server listening on port " + PORT);
 });
